@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 {% block title %}{{ place.title or '관광지 상세정보' }}{% endblock %}
-{% block content %}<a class="back-link" href="{{ url_for('index') }}">← 갤러리로 돌아가기</a>
-{% if error %}<div class="notice error"><strong>상세정보를 불러오지 못했습니다.</strong><p>{{ error }}</p></div>{% else %}<article class="detail-card"><p class="eyebrow">{{ content_type_name }}</p><h1>{{ place.title or '관광지 상세정보' }}</h1>{% set image = place.firstimage or place.firstimage2 %}{% if image %}<img class="detail-hero-image" src="{{ image }}" alt="{{ place.title or '관광지 이미지' }}">{% endif %}<div class="detail-summary">{% if place.addr1 %}<p><strong>주소</strong> {{ place.addr1 }} {{ place.addr2 or '' }}</p>{% endif %}{% if place.tel %}<p><strong>전화</strong> {{ place.tel }}</p>{% endif %}{% if place.zipcode %}<p><strong>우편번호</strong> {{ place.zipcode }}</p>{% endif %}{% if place.mapy and place.mapx %}<p><strong>위치</strong> 위도 {{ place.mapy }}, 경도 {{ place.mapx }}</p>{% endif %}</div>{% if place.overview %}<section class="overview"><h2>소개</h2><p>{{ place.overview|striptags }}</p></section>{% endif %}{% if intro %}<section class="overview"><h2>추가 정보</h2><dl class="info-grid">{% for key, value in intro.items() %}{% if value and key not in ['contentid','contenttypeid','sigungucode','areacode'] %}<dt>{{ key }}</dt><dd>{{ value }}</dd>{% endif %}{% endfor %}</dl></section>{% endif %}{% if place.contentid %}<p class="source-id">관광정보 ID: {{ place.contentid }}</p>{% endif %}</article>{% endif %}
+{% block content %}
+<a class="back-link" href="{{ url_for('index') }}">← 갤러리로 돌아가기</a>
+{% if error %}<div class="notice error"><strong>안내: 상세정보 일부를 불러오지 못했습니다.</strong><p>{{ error }}</p><p>검색 결과에서 확보한 기본 정보는 아래에 표시합니다.</p></div>{% endif %}
+<article class="detail-card">
+  <p class="eyebrow">{{ content_type_name }}</p>
+  <h1>{{ place.title or '관광지 상세정보' }}</h1>
+  {% set image = place.firstimage or place.firstimage2 %}
+  {% if image %}<img class="detail-hero-image" src="{{ image }}" alt="{{ place.title or '관광지 이미지' }}">{% endif %}
+  <div class="detail-summary">
+    {% if place.addr1 or place.addr2 %}<p><strong>주소</strong> {{ place.addr1 or '' }} {{ place.addr2 or '' }}</p>{% endif %}
+    {% if place.tel %}<p><strong>전화</strong> {{ place.tel }}</p>{% endif %}
+    {% if place.zipcode %}<p><strong>우편번호</strong> {{ place.zipcode }}</p>{% endif %}
+    {% if place.mapy and place.mapx %}<p><strong>위치</strong> 위도 {{ place.mapy }}, 경도 {{ place.mapx }}</p>{% endif %}
+  </div>
+  {% if place.overview %}<section class="overview"><h2>소개</h2><p>{{ place.overview|striptags }}</p></section>{% endif %}
+  {% if intro %}<section class="overview"><h2>추가 정보</h2><dl class="info-grid">{% for key, value in intro.items() %}{% if value and key not in ['contentid','contenttypeid','sigungucode','areacode'] %}<dt>{{ key }}</dt><dd>{{ value }}</dd>{% endif %}{% endfor %}</dl></section>{% endif %}
+  {% if place.contentid %}<p class="source-id">관광정보 ID: {{ place.contentid }}</p>{% endif %}
+</article>
 {% endblock %}
