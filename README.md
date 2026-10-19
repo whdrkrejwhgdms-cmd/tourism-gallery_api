@@ -28,6 +28,19 @@ Git for Windows에 포함된 Git Credential Manager를 사용하면 토큰을 Gi
 git config --global credential.helper manager
 ```
 
+### PAT를 입력하는 위치
+
+PAT를 저장소 파일이나 `.env`에 넣는 것이 아닙니다. 위 설정을 마친 뒤 `git push origin main`을 실행했을 때 인증 창이 나타나면 다음과 같이 입력합니다.
+
+- 브라우저가 열리면 GitHub 계정으로 로그인하고 권한 승인을 완료합니다. PAT를 별도로 입력할 필요가 없습니다.
+- 터미널에서 `Username`을 물으면 GitHub 사용자 이름을 입력합니다.
+- 이어서 `Password`를 물으면 새 PAT를 붙여넣고 Enter를 누릅니다. 터미널에는 붙여넣은 글자나 별표가 표시되지 않는 것이 정상입니다.
+- Git Credential Manager 창이 열리면 해당 창의 GitHub 인증 절차를 따릅니다. PAT 입력란이 표시되는 경우 그곳에 붙여넣습니다.
+
+인증을 성공하면 Git Credential Manager가 Windows 자격 증명 관리자에 보관하므로 이후 푸시에서는 다시 입력하지 않을 수 있습니다. 토큰을 직접 Windows 자격 증명 관리자에 등록할 필요는 없습니다. 잘못된 계정이나 만료된 토큰이 저장되어 인증이 반복해서 실패하면 Windows에서 **자격 증명 관리자 → Windows 자격 증명**을 열고 GitHub 관련 항목만 제거한 다음 `git push origin main`을 다시 실행해 새 PAT로 인증하세요.
+
+> GitHub PAT는 GitHub 저장소에 코드를 업로드하기 위한 자격 증명입니다. 앱의 한국관광공사 `TOUR_API_KEY`와는 서로 다른 키입니다. `TOUR_API_KEY`는 아래 **Windows에서 실행** 및 **Render 배포** 절차에 따라 환경 변수로 설정하며, GitHub PAT를 앱 설정이나 소스 코드에 넣지 마세요.
+
 ## 처음 한 번: 저장소 받기
 
 아직 저장소를 내려받지 않았다면 프로젝트를 둘 폴더의 상위 위치에서 실행합니다.
