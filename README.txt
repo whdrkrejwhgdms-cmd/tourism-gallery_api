@@ -1,6 +1,6 @@
 관광정보 갤러리 상세페이지 수정 파일
 
-포함 파일
+포함 파일 
 - app.py
 - templates/index.html
 - templates/detail.html
